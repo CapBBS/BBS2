@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
+/*
     @Override
     public void onResume() {
         super.onResume();
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         unregisterReceiver(receiver);
     }
-
+*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

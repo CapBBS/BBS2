@@ -15,9 +15,9 @@ public class WifiBroadcastReceiver extends BroadcastReceiver{
 
         private WifiP2pManager wifiP2pManager;
         private Channel channel;
-        private MainActivity activity;
+        private CreateConnectionActivity activity;
 
-        public WifiBroadcastReceiver(WifiP2pManager manager,Channel channel,MainActivity activity) {
+        public WifiBroadcastReceiver(WifiP2pManager manager,Channel channel,CreateConnectionActivity activity) {
             super();
             this.activity = activity;
             this.channel = channel;
