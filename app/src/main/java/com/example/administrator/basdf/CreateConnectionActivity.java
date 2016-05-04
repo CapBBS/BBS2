@@ -7,7 +7,12 @@ import android.os.Bundle;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.net.wifi.p2p.WifiP2pDeviceList;
+import android.net.wifi.p2p.WifiP2pDevice;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2016-05-04.
@@ -18,6 +23,7 @@ public class CreateConnectionActivity extends Activity {
     private Channel channel;
     private IntentFilter wifiP2pIntentFilter;
     private WifiBroadcastReceiver wifiBroadcastReceiver;
+    private ListView peerDeviceListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,8 @@ public class CreateConnectionActivity extends Activity {
 
         manager.discoverPeers(channel, null);
 
+        peerDeviceListView = (ListView)findViewById(R.id.peer_list);
+
     }
 
     @Override
@@ -50,7 +58,13 @@ public class CreateConnectionActivity extends Activity {
         this.unregisterReceiver(wifiBroadcastReceiver);
     }
 
-    protected void displayPeers(WifiP2pDeviceList deviceList) {
-        Toast.makeText(this, "피어찾기를 실행합니다.",Toast.LENGTH_SHORT).show();
+    protected void displayPeers(WifiP2pDeviceList wifiP2pDeviceList) {
+        ArrayList peerDeviceNameList = new ArrayList();
+        for(WifiP2pDevice device : wifiP2pDeviceList.getDeviceList()) {
+            peerDeviceNameList.add(device.deviceName);
+        }
+        ArrayAdapter peerNameData = new ArrayAdapter(this, android.R.layout.simple_list_item_1,peerDeviceNameList);
+        peerDeviceListView.setAdapter(peerNameData);
+        Toast.makeText(this, "피어를 찾음.",Toast.LENGTH_SHORT).show();
     }
 }
