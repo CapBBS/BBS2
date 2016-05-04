@@ -62,6 +62,11 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(clientStartIntent, 55);
     }
 
+    public void searchPeers(View view) {
+        Intent peerSearchIntent = new Intent(this, CreateConnectionActivity.class);
+        startActivityForResult(peerSearchIntent, Constants.START_ACTIVITY);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -73,11 +78,11 @@ public class MainActivity extends AppCompatActivity {
                 }
         }
     }
-
+/*
     public void searchPeers(View view) {
         manager.discoverPeers(channel, null);
     }
-
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
