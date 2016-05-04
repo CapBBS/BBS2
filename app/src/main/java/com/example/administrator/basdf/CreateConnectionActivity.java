@@ -3,11 +3,15 @@ package com.example.administrator.basdf;
 import android.app.Activity;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.net.wifi.WpsInfo;
+import android.net.wifi.p2p.WifiP2pConfig;
 import android.os.Bundle;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pDevice;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -24,7 +28,7 @@ public class CreateConnectionActivity extends Activity {
     private IntentFilter wifiP2pIntentFilter;
     private WifiBroadcastReceiver wifiBroadcastReceiver;
     private ListView peerDeviceListView;
-
+    ArrayList<WifiP2pDevice> deviceArrayList;
     /*
     CreatConnectionActivity 클래스 호출시 최초 실행하는 Method 이며
     시스템 서비스로부터 정보를 얻어와 WifiP2pManager를 초기화 시킨다.
@@ -82,13 +86,35 @@ public class CreateConnectionActivity extends Activity {
      ListView를 새로 그려줘서 사용자가 연결할 수 있는 기기를
      표시하여 주는 Method이다.
      */
-    protected void displayPeers(WifiP2pDeviceList wifiP2pDeviceList) {
-        ArrayList peerDeviceNameList = new ArrayList();
+    protected void displayPeers(final WifiP2pDeviceList wifiP2pDeviceList) {
+        final ArrayList<String> peerDeviceNameList = new ArrayList();
         for(WifiP2pDevice device : wifiP2pDeviceList.getDeviceList()) {
             peerDeviceNameList.add(device.deviceName);
         }
         ArrayAdapter peerNameData = new ArrayAdapter(this, android.R.layout.simple_list_item_1,peerDeviceNameList);
         peerDeviceListView.setAdapter(peerNameData);
         Toast.makeText(this, "피어 상태 변경 감지",Toast.LENGTH_SHORT).show();
+
+        peerDeviceListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                for(WifiP2pDevice device :  wifiP2pDeviceList.getDeviceList() ) {
+                    if(device.deviceName.equals(peerDeviceNameList.get(position))) {
+                        connectPeer(device);
+                    }
+                }
+
+            }
+        });
+    }
+
+    public void connectPeer(WifiP2pDevice device){
+        WifiP2pConfig config = new WifiP2pConfig();
+        config.deviceAddress = device.deviceAddress;
+        config.wps.setup = WpsInfo.PBC;
+        manager.connect(channel, config, null);
+        setResult(Constants.ACTIVATE_WIFIP2P);
+        finish();
     }
 }

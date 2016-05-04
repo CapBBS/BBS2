@@ -53,7 +53,7 @@
         android:layout_height="50dp"
         android:layout_x="125dp"
         android:layout_y="250dp"
-        android:onClick="searchPeers"
+        android:onClick="createConnection"
         android:text="자동 연결"/>
 
     <TextView

@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.io.File;
@@ -38,16 +39,16 @@ public class MainActivity extends AppCompatActivity {
 
     private WifiP2pManager manager;
     private WifiP2pManager.Channel channel;
-    private WifiBroadcastReceiver receiver = null;
 
-
+/*
     public void connetPeer(WifiP2pDevice device){
         WifiP2pConfig config = new WifiP2pConfig();
         config.deviceAddress = device.deviceAddress;
         config.wps.setup = WpsInfo.PBC;
         manager.connect(channel, config, null);
     }
-
+*/
+    /*
     public void displayPeers(final WifiP2pDeviceList peers){
         ArrayList<String> peerStringArrayList = new ArrayList<>();
         for(WifiP2pDevice device : peers.getDeviceList()){
@@ -55,26 +56,31 @@ public class MainActivity extends AppCompatActivity {
             connetPeer(device);
         }
     }
-
+*/
     public void openFileBrowser(View view) {
 
         Intent clientStartIntent = new Intent(this, FileBrowser.class);
-        startActivityForResult(clientStartIntent, 55);
+        startActivityForResult(clientStartIntent, Constants.FILE_REQUEST);
     }
 
-    public void searchPeers(View view) {
+    public void createConnection(View view) {
         Intent peerSearchIntent = new Intent(this, CreateConnectionActivity.class);
-        startActivityForResult(peerSearchIntent, Constants.START_ACTIVITY);
+        startActivityForResult(peerSearchIntent, Constants.CREATE_CONNECTION);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case 55 :
+            case Constants.FILE_REQUEST :
                 if(resultCode == RESULT_OK) {
                     File file = (File) data.getExtras().get("file");
                     device_show.setText(file.getAbsolutePath());
+                }
+                break;
+            case Constants.CREATE_CONNECTION :
+                if(resultCode == Constants.ACTIVATE_WIFIP2P) {
+                    Toast.makeText(this, "연결이 되었습니다", Toast.LENGTH_SHORT).show();
                 }
         }
     }
@@ -136,13 +142,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-/*
+
     @Override
     public void onResume() {
         super.onResume();
-        receiver = new WifiBroadcastReceiver(manager, channel, this);
-        registerReceiver(receiver, intentFilter);
+       // if(wi)
     }
+/*
     // BroadcastReceiver 등록을 취소한다.
 
     @Override

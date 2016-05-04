@@ -5,8 +5,8 @@
 <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="연결 하려는 기기를 눌러"
-    android:textSize="30dp"/>
+    android:text="연결 하려는 기기를 눌러 주세요"
+    android:textSize="25dp"/>
 
     <ListView
         android:id="@+id/peer_list"
