@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,6 +56,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void openFileBrowser(View view) {
+
+        Intent clientStartIntent = new Intent(this, FileBrowser.class);
+        startActivityForResult(clientStartIntent, 55);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 55 :
+                if(resultCode == RESULT_OK) {
+                    File file = (File) data.getExtras().get("file");
+                    device_show.setText(file.getAbsolutePath());
+                }
+        }
+    }
 
     public void searchPeers(View view) {
         manager.discoverPeers(channel, null);

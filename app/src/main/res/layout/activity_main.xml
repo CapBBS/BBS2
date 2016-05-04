@@ -44,7 +44,8 @@
         android:layout_height="50dp"
         android:layout_x="125dp"
         android:layout_y="200dp"
-        android:text="수동 연결"
+        android:onClick="openFileBrowser"
+        android:text="파일브라우저"
         />
 
     <Button
