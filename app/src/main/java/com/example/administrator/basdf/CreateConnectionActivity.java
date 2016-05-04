@@ -25,6 +25,12 @@ public class CreateConnectionActivity extends Activity {
     private WifiBroadcastReceiver wifiBroadcastReceiver;
     private ListView peerDeviceListView;
 
+    /*
+    CreatConnectionActivity 클래스 호출시 최초 실행하는 Method 이며
+    시스템 서비스로부터 정보를 얻어와 WifiP2pManager를 초기화 시킨다.
+    그리고 플랫폼에서 이 Activity에서 필요한 정보를 걸러내어줄 IntentFilter를 초기화하고
+    action 을 추가한다.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +51,12 @@ public class CreateConnectionActivity extends Activity {
 
     }
 
+
+    /*
+    OnStart 이후에 실행 되는 Method 이며
+    플랫폼이 보내주는 Broadcast를 잡아주는 BroadcastReceiver를 초기화하고
+    이 Activity에 등록한다.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -52,12 +64,24 @@ public class CreateConnectionActivity extends Activity {
         this.registerReceiver(wifiBroadcastReceiver, wifiP2pIntentFilter);
     }
 
+    /*
+    홈키 등을 눌렀을 경우 불려오는  Method  이며
+    일시적으로 BroadcastReceiver 등록을 해제해 줘서
+    Focus 를 갖고있지 않을 경우 Broadcast를 잡지 않게 한다.
+     */
     @Override
     protected void onPause() {
         super.onPause();
         this.unregisterReceiver(wifiBroadcastReceiver);
     }
 
+
+    /*
+    이 Activity에 등록된 BroadCastReceiver 에서
+     WIFI_P2P_PEERS_CHANGED_ACTION 이 잡혔을 경우
+     ListView를 새로 그려줘서 사용자가 연결할 수 있는 기기를
+     표시하여 주는 Method이다.
+     */
     protected void displayPeers(WifiP2pDeviceList wifiP2pDeviceList) {
         ArrayList peerDeviceNameList = new ArrayList();
         for(WifiP2pDevice device : wifiP2pDeviceList.getDeviceList()) {
@@ -65,6 +89,6 @@ public class CreateConnectionActivity extends Activity {
         }
         ArrayAdapter peerNameData = new ArrayAdapter(this, android.R.layout.simple_list_item_1,peerDeviceNameList);
         peerDeviceListView.setAdapter(peerNameData);
-        Toast.makeText(this, "피어를 찾음.",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "피어 상태 변경 감지",Toast.LENGTH_SHORT).show();
     }
 }
