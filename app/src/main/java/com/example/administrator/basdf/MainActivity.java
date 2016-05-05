@@ -64,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createConnection(View view) {
-        Intent peerSearchIntent = new Intent(this, CreateConnectionActivity.class);
-        startActivityForResult(peerSearchIntent, Constants.CREATE_CONNECTION);
+        Intent createConnectionIntent = new Intent(this, CreateConnectionActivity.class);
+        startActivityForResult(createConnectionIntent, Constants.CREATE_CONNECTION);
     }
 
     @Override
@@ -80,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case Constants.CREATE_CONNECTION :
                 if(resultCode == Constants.ACTIVATE_WIFIP2P) {
+                    Intent musicPlayIntent = new Intent(this, MusicPlayActivity.class);
+                    startActivityForResult(musicPlayIntent, Constants.MUSIC_PLAY);
                     Toast.makeText(this, "연결이 되었습니다", Toast.LENGTH_SHORT).show();
                 }
         }
