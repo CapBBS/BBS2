@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-       // if(wi)
+
     }
 /*
     // BroadcastReceiver 등록을 취소한다.

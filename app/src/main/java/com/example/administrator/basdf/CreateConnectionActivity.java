@@ -102,6 +102,7 @@ public class CreateConnectionActivity extends Activity {
                 for(WifiP2pDevice device :  wifiP2pDeviceList.getDeviceList() ) {
                     if(device.deviceName.equals(peerDeviceNameList.get(position))) {
                         connectPeer(device);
+
                     }
                 }
 
