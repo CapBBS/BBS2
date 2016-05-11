@@ -28,7 +28,7 @@ public class CreateConnectionActivity extends Activity {
     private IntentFilter wifiP2pIntentFilter;
     private WifiBroadcastReceiver wifiBroadcastReceiver;
     private ListView peerDeviceListView;
-    ArrayList<WifiP2pDevice> deviceArrayList;
+
     /*
     CreatConnectionActivity 클래스 호출시 최초 실행하는 Method 이며
     시스템 서비스로부터 정보를 얻어와 WifiP2pManager를 초기화 시킨다.
@@ -115,6 +115,7 @@ public class CreateConnectionActivity extends Activity {
         config.deviceAddress = device.deviceAddress;
         config.wps.setup = WpsInfo.PBC;
         manager.connect(channel, config, null);
+
         setResult(Constants.ACTIVATE_WIFIP2P);
         finish();
     }
